@@ -3,7 +3,7 @@ const db = require('../../db');
 const registerUser = (req, res) => {
   const { firstname, lastname, email, mobile, password } = req.body;
 
-  const query = 'INSERT INTO users (firstname, lastname, email, mobile, password) VALUES (?, ?, ?, ?, ?)';
+  const query = 'INSERT INTO Users (firstname, lastname, email, mobile, password) VALUES (?, ?, ?, ?, ?)';
   const values = [firstname, lastname, email, mobile, password];
 
   db.query(query, values, (err, result) => {
