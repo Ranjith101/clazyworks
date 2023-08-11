@@ -15,6 +15,8 @@ const loginRoute = require('./routes/login');
 const logoutRoute = require('./routes/logout');
 const vendorRoute = require('./routes/vendor');
 const newVendorSubscriptionRoute = require('./routes/newVendorSubscription'); // Add this line
+const newSubscriptionRoute = require('./routes/newSubscription');
+const vendorRoutes = require('./routes/vendorRoutes');
 
 app.use(bodyParser.json());
 app.use(cors());
@@ -34,6 +36,8 @@ app.use('/api', loginRoute);
 app.use('/api', logoutRoute);
 app.use('/api', vendorRoute);
 app.use('/api', newVendorSubscriptionRoute); // Add this line
+app.use('/api', newSubscriptionRoute);
+app.use('/api', vendorRoutes);
 
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
