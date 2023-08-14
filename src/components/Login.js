@@ -3,9 +3,10 @@
 import React, { useState } from 'react';
 import { Container, Form, Button } from 'react-bootstrap';
 import { loginUser } from '../api/api';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 const LoginPage = () => {
+  const navigate= useNavigate();
   const [emailOrMobile, setEmailOrMobile] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
@@ -23,7 +24,9 @@ const LoginPage = () => {
   
       if (response) {
         const { message, user } = response;
-        alert(message);
+        alert(message); 
+        navigate('/payment')
+
         // You can store the user information in state or context for authenticated user session
         console.log('Logged in user:', user);
       } else {
