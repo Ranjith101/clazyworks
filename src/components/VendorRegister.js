@@ -1,10 +1,8 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { registerVendor } from '../api'; // Import your API function
-import { selectUserId } from '../slices/userSlice'; // Import the selector
+import { registerVendor } from '../api/api'; // Import your API function
 
 const VendorRegistrationPage = () => {
-  const dispatch = useDispatch();
   const userId = useSelector(selectUserId); // Get the user ID from the store
 
   const [vendorData, setVendorData] = useState({

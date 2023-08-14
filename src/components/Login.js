@@ -1,3 +1,5 @@
+
+
 import React, { useState } from 'react';
 import { Container, Form, Button } from 'react-bootstrap';
 import { loginUser } from '../api/api';
@@ -8,24 +10,6 @@ const LoginPage = () => {
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
 
-  
-  // const handleSubmit = async (e) => {
-  //   e.preventDefault();
-  
-  //   try {
-  //     const response = await loginUser({
-  //       emailOrMobile,
-  //       password,
-  //     });
-  //     const { message, user } = response.data;
-  //     alert(message);
-  //     // You can store the user information in state or context for authenticated user session
-  //     console.log('Logged in user:', user);
-  //   } catch (error) {
-  //     console.error('Error logging in:', error);
-  //     setError('Invalid credentials');
-  //   }
-  // };
   
 
   const handleSubmit = async (e) => {
