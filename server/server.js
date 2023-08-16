@@ -19,7 +19,6 @@ const vendorRoute = require('./routes/vendor');
 const newVendorSubscriptionRoute = require('./routes/newVendorSubscription'); // Add this line
 const newSubscriptionRoute = require('./routes/newSubscription');
 const vendorRoutes = require('./routes/vendorRoutes');
-const paymentRoute = require('./routes/payments');
 const razorpayRoutes = require('./routes/razorpayRoutes');
 
 app.use(bodyParser.json());
@@ -48,7 +47,6 @@ app.use('/api', vendorRoute);
 app.use('/api', newVendorSubscriptionRoute); // Add this line
 app.use('/api', newSubscriptionRoute);
 app.use('/api', vendorRoutes);
-//app.use('/api/payment', paymentRoute);
 app.use('/api/payment',razorpayRoutes)
 
 dotenv.config()
