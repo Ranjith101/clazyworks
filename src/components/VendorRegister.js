@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
 import { registerVendor } from '../api/api'; // Import your API function
-
+import { Form, Container, Button } from 'react-bootstrap';
 const VendorRegistrationPage = () => {
     const userFromLocalStorage = JSON.parse(localStorage.getItem('user'));
  
@@ -49,29 +48,31 @@ const VendorRegistrationPage = () => {
   };
 
   return (
-    <div>
-      <h1>Vendor Registration</h1>
-      <form>
-        <input type="text" name="firstname" placeholder="First Name"  onChange={handleInputChange} />
-        <input type="text" name="lastname" placeholder="Last Name"  onChange={handleInputChange} />
-        <input type="email" name="email" placeholder="Email" onChange={handleInputChange} />
-        <input type="text" name="mobile" placeholder="Mobile" onChange={handleInputChange} />
-        <select name="gender" onChange={handleInputChange}>
-          <option value="">Select Gender</option>
-          <option value="Male">Male</option>
-          <option value="Female">Female</option>
-          <option value="Other">Other</option>
-        </select>
-        <input type="text" name="address1" placeholder="Address Line 1" onChange={handleInputChange} />
-        <input type="text" name="address2" placeholder="Address Line 2" onChange={handleInputChange} />
-        <input type="text" name="area" placeholder="Area" onChange={handleInputChange} />
-        <input type="text" name="city" placeholder="City" onChange={handleInputChange} />
-        <input type="text" name="state" placeholder="State" onChange={handleInputChange} />
-        <input type="text" name="country" placeholder="Country" onChange={handleInputChange} />
-        <input type="text" name="pinCode" placeholder="Pin Code" onChange={handleInputChange} />
-        <button type="button" onClick={handleVendorRegistration}>Register Vendor</button>
-      </form>
-    </div>
+    <Container>
+    <h1>Vendor Registration</h1>
+    <Form>
+      <Form.Control type="text" name="firstname" placeholder="First Name" className='mb-3' onChange={handleInputChange} />
+      <Form.Control type="text" name="lastname" placeholder="Last Name" className='mb-3' onChange={handleInputChange} />
+      <Form.Control type="email" name="email" placeholder="Email" className='mb-3' onChange={handleInputChange} />
+      <Form.Control type="text" name="mobile" placeholder="Mobile" className='mb-3' onChange={handleInputChange} />
+      <Form.Control as="select" name="gender" className='mb-3' onChange={handleInputChange}>
+        <option value="">Select Gender</option>
+        <option value="Male">Male</option>
+        <option value="Female">Female</option>
+        <option value="Other">Other</option>
+      </Form.Control>
+      <Form.Control type="text" name="address1" placeholder="Address Line 1" className='mb-3' onChange={handleInputChange} />
+      <Form.Control type="text" name="address2" placeholder="Address Line 2" className='mb-3' onChange={handleInputChange} />
+      <Form.Control type="text" name="area" placeholder="Area" className='mb-3' onChange={handleInputChange} />
+      <Form.Control type="text" name="city" placeholder="City" className='mb-3' onChange={handleInputChange} />
+      <Form.Control type="text" name="state" placeholder="State" className='mb-3' onChange={handleInputChange} />
+      <Form.Control type="text" name="country" placeholder="Country" className='mb-3' onChange={handleInputChange} />
+      <Form.Control type="text" name="pinCode" placeholder="Pin Code" className='mb-3' onChange={handleInputChange} />
+      <Button variant="primary" onClick={handleVendorRegistration}>
+        Register Vendor
+      </Button>
+    </Form>
+  </Container>
   );
 };
 
