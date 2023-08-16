@@ -3,36 +3,36 @@ import { useState } from "react";
 import "../../App.css";
 
 const Payment_page = () => {
-  const [book, setBook] = useState({
-    name: "The Fault In Our Stars",
-    author: "John Green",
-    img: "https://images-na.ssl-images-amazon.com/images/I/817tHNcyAgL.jpg",
-    price: 500,
-  });
+  const [selectedPlan, setSelectedPlan] = useState(null);
 
+  const plans = [
+    { id: "Silver Plan", name: "Silver Plan", price: 299 },
+    { id: "Gold Plan", name: "Gold Plan", price: 499 },
+    { id: "Platinum Plan", name: "Platinum Plan", price: 799 },
+  ];
+
+  const userFromLocalStorage = JSON.parse(localStorage.getItem('user'));
+  console.log(userFromLocalStorage,"userFromLocalStorage")
   // Replace with actual user information
   const user = {
-    id: 21, // Example user ID
-    name: "Ranjith", // Example user name
+    id: userFromLocalStorage.id, // Example user ID
+    name: userFromLocalStorage.firstname, // Example user name
     // ... other user properties
   };
 
   const initPayment = async (data) => {
-	console.log(data,"data")
     const options = {
       key: "rzp_test_0exqW8wtRx0cbB",
       amount: data.amount,
       currency: data.currency,
-      name: book.name,
-      description: "Test Transaction",
-      image: book.img,
+      name: selectedPlan.name,
+      description: "Subscription Payment",
       order_id: data.id,
       prefill: {
         email: user.email, // Provide user's email
         contact: user.contact, // Provide user's contact number
       },
       handler: async (response) => {
-		console.log(response)
         try {
           const verifyUrl = "http://localhost:3001/api/payment/verify";
           const verificationPayload = {
@@ -54,56 +54,63 @@ const Payment_page = () => {
     rzp1.open();
   };
 
-//   const handlePayment = async () => {
-//     try {
-//       const orderUrl = "http://localhost:3001/api/payment/orders";
-//       const { data } = await axios.post(orderUrl, { amount: book.price });
-//       console.log(data);
-//       initPayment({
-//         amount: data.data.amount, // Convert to paise (currency subunit)
-//         currency: "INR", // Replace with your preferred currency
-//         id: data.data.id,
-//       });
-// 	  console.log(data.data.amount)
-//     } catch (error) {
-//       console.log(error);
-//     }
-//   };
+  const handlePayment = async () => {
+    if (selectedPlan) {
+      try {
+        const orderUrl = "http://localhost:3001/api/payment/orders";
+        const selectedPlanData = plans.find((plan) => plan.id === selectedPlan);
+        const { data } = await axios.post(orderUrl, {
+          amount: selectedPlanData.price,
+        });
+        console.log(data);
 
-const handlePayment = async () => {
-	try {
-	  const orderUrl = "http://localhost:3001/api/payment/orders";
-	  const { data } = await axios.post(orderUrl, { amount: book.price });
-	  console.log(data);
-  
-	  const amountInPaise = parseFloat(data.data.amount); // Convert to number
-	  if (!isNaN(amountInPaise)) {
-		// Ensure the amount is a valid number
-		initPayment({
-		  amount: amountInPaise, // Amount in paise
-		  currency: "INR",
-		  id: data.data.id,
-		});
-		console.log(amountInPaise);
-	  } else {
-		console.log("Invalid amount received from server");
-	  }
-	} catch (error) {
-	  console.log(error);
-	}
+        const amountInPaise = parseFloat(data.data.amount); // Convert to number
+        if (!isNaN(amountInPaise)) {
+          // Ensure the amount is a valid number
+          initPayment({
+            amount: amountInPaise, // Amount in paise
+            currency: "INR",
+            id: data.data.id,
+          });
+
+          // After successful payment, also create a new subscription
+          const subscriptionApiUrl = "http://localhost:3001/api/subscription/create";
+          const subscriptionData = {
+            planName: selectedPlanData.name,
+            createdBy: user.id,
+            modifiedBy: user.id,
+          };
+          await axios.post(subscriptionApiUrl, subscriptionData);
+        } else {
+          console.log("Invalid amount received from server");
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    } else {
+      console.log("No plan selected");
+    }
   };
+
   
   return (
     <div className="App">
-      <div className="book_container">
-        <img src={book.img} alt="book_img" className="book_img" />
-        <p className="book_name">{book.name}</p>
-        <p className="book_author">By {book.author}</p>
-        <p className="book_price">
-          Price : <span>&#x20B9; {book.price}</span>
-        </p>
-        <button onClick={handlePayment} className="buy_btn">
-          buy now
+      <div className="subscription_container">
+        <h2>Select a Subscription Plan</h2>
+        <div className="plan_options">
+          {plans.map((plan) => (
+            <div
+              key={plan.id}
+              className={`plan ${selectedPlan === plan.id ? "selected" : ""}`}
+              onClick={() => setSelectedPlan(plan.id)}
+            >
+              <h3>{plan.name}</h3>
+              <p>&#x20B9; {plan.price}</p>
+            </div>
+          ))}
+        </div>
+        <button onClick={handlePayment} className="buy_btn" disabled={!selectedPlan}>
+          Subscribe
         </button>
       </div>
     </div>

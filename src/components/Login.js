@@ -11,8 +11,6 @@ const LoginPage = () => {
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
 
-  
-
   const handleSubmit = async (e) => {
     e.preventDefault();
   
@@ -25,6 +23,8 @@ const LoginPage = () => {
       if (response) {
         const { message, user } = response;
         alert(message); 
+        // Store user information in localStorage
+        localStorage.setItem('user', JSON.stringify(user));
         navigate('/payment')
 
         // You can store the user information in state or context for authenticated user session

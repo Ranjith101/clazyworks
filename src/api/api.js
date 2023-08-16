@@ -22,7 +22,7 @@ export const loginUser = async (loginData) => {
 
 export const registerVendor = async (vendorData) => {
   try {
-    const response = await axios.post(`${BASE_URL}/api/register-vendor`, vendorData);
+    const response = await axios.post(`${BASE_URL}/api/vendor/register`, vendorData);
     return response.data;
   } catch (error) {
     throw error;
