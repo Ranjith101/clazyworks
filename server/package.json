@@ -4,9 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev":"node server.js",
+    "dev": "node server.js",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build":"npm i"
+    "build": "npm i"
   },
   "keywords": [],
   "author": "",
@@ -20,6 +20,7 @@
     "express-session": "^1.17.3",
     "http": "^0.0.1-security",
     "mysql": "^2.18.1",
+    "mysql2": "^3.6.0",
     "passport": "^0.6.0",
     "razorpay": "^2.9.1",
     "stripe": "^12.18.0",

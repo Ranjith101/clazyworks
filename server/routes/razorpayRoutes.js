@@ -42,7 +42,7 @@ router.post("/verify", async (req, res) => {
             // Store payment details in the database
             const insertPaymentQuery = 'INSERT INTO Payments (user_id, username, payment_id, payment_amount) VALUES (?, ?, ?, ?)';
             const insertPaymentValues = [userId, username, razorpay_payment_id, response.amount ]; // Convert amount to actual currency
-
+            console.log(insertPaymentValues,"payment");
             db.query(insertPaymentQuery, insertPaymentValues, (err, result) => {
                 if (err) {
                     console.error('Error storing payment details:', err);

@@ -11,6 +11,12 @@ const LoginPage = () => {
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
 
+  React.useEffect(() => {
+    const loggedInUser = localStorage.getItem('user');
+    if (loggedInUser) {
+      navigate('/payment'); // Redirect to the payment page if user is logged in
+    }
+  }, []);
   const handleSubmit = async (e) => {
     e.preventDefault();
   
