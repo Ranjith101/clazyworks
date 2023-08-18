@@ -1,11 +1,22 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { registerVendor } from '../api/api'; // Import your API function
 import { Form, Container, Button } from 'react-bootstrap';
+import { Link, useNavigate } from 'react-router-dom';
+import { useSelector,useDispatch } from 'react-redux';
+import { setVendor } from '../store/userSlice';
+import { fetchUserProfileApi } from '../api/api';
+
 const VendorRegistrationPage = () => {
+    const dispatch = useDispatch();
+    const user = useSelector((state)=>state.user)
+    // console.log("from redux",user)
+    const navigate = useNavigate();
     const userFromLocalStorage = JSON.parse(localStorage.getItem('user'));
  
     const userId = userFromLocalStorage.id; // Get the user ID from the store
 
+  const [isVendorRegistered, setIsVendorRegistered] = useState(false);  
+  
   const [vendorData, setVendorData] = useState({
     firstname: '',
     lastname: '',
@@ -22,17 +33,35 @@ const VendorRegistrationPage = () => {
     status: 'Active', // Default value
   });
 
+  useEffect(() => {
+    const fetchUserProfile = async () => {
+      try {
+        const userProfile = await fetchUserProfileApi(userId);
+        console.log(userProfile)
+        setIsVendorRegistered(userProfile); // Assuming the API response has an 'isVendor' field
+      } catch (error) {
+        console.error('Error fetching user profile:', error);
+      }
+    };
+
+    fetchUserProfile();
+  }, [userId]);
+
   const handleVendorRegistration = async () => {
     const vendorRegistrationData = {
       userId,
       ...vendorData,
     };
 
+    
     try {
       // Call your registerVendor API function
       const response = await registerVendor(vendorRegistrationData);
-
-      console.log('Vendor registered successfully');
+      // console.log('Vendor registered successfully', response.vendor);
+      dispatch(setVendor(response.vendor))
+      localStorage.setItem('registeredVendor', JSON.stringify(response.vendor));
+      navigate('/payment')
+      
     } catch (error) {
       // Handle the error
       console.error('Error registering vendor:', error);
@@ -48,7 +77,16 @@ const VendorRegistrationPage = () => {
   };
 
   return (
+    
     <Container>
+      {isVendorRegistered ? (
+        <>
+        <p>User is registered as a vendor.</p>
+        <p>if payment pending <Link to='/payment'>payment page</Link></p>
+        </>
+      ) : (
+        <>
+      
     <h1>Vendor Registration</h1>
     <Form>
       <Form.Control type="text" name="firstname" placeholder="First Name" className='mb-3' onChange={handleInputChange} />
@@ -72,6 +110,8 @@ const VendorRegistrationPage = () => {
         Register Vendor
       </Button>
     </Form>
+    </>
+    )}
   </Container>
   );
 };

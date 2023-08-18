@@ -4,6 +4,7 @@ import LoginPage from './components/Login';
 import Register from './components/Register';
 import VendorRegistrationPage from './components/VendorRegister';
 import Payment_page from './components/razorpay/Payment';
+import Products from './components/Products';
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
               <Route path="/register" element={<Register />} />
 			        <Route path="/payment" element={<Payment_page />} />
               <Route path="/vendor-register" element={<VendorRegistrationPage />} />
+              <Route path="/products" element={<Products />} />
             </Routes>
           </div>
         </div>      

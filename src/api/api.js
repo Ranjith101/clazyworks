@@ -47,3 +47,21 @@ export const paymentOrders = async (vendorData) => {
     throw error;
   }
 };
+// Example fetchUserProfileApi function
+export const fetchUserProfileApi = async (userId) => {
+  try {
+    const response = await axios.get(`${BASE_URL}/api/vendors/${userId}`);
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+};
+
+export const fetchUserPaymentApi = async (userId) => {
+  try {
+    const response = await axios.get(`${BASE_URL}/api/fetchpayment/${userId}`);
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+};

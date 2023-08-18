@@ -1,22 +1,24 @@
-
-
 import React, { useState } from 'react';
 import { Container, Form, Button } from 'react-bootstrap';
 import { loginUser } from '../api/api';
 import { Link, useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { setUser } from '../store/userSlice';
 
 const LoginPage = () => {
+  const dispatch = useDispatch();
   const navigate= useNavigate();
   const [emailOrMobile, setEmailOrMobile] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
+  
 
-  React.useEffect(() => {
-    const loggedInUser = localStorage.getItem('user');
-    if (loggedInUser) {
-      navigate('/payment'); // Redirect to the payment page if user is logged in
-    }
-  }, []);
+  // React.useEffect(() => {
+  //   const loggedInUser = localStorage.getItem('user');
+  //   if (loggedInUser) {
+  //     navigate('/payment'); // Redirect to the payment page if user is logged in
+  //   }
+  // }, []);
   const handleSubmit = async (e) => {
     e.preventDefault();
   
@@ -29,9 +31,10 @@ const LoginPage = () => {
       if (response) {
         const { message, user } = response;
         alert(message); 
+        dispatch(setUser(user));
         // Store user information in localStorage
         localStorage.setItem('user', JSON.stringify(user));
-        navigate('/payment')
+        navigate('/vendor-register')
 
         // You can store the user information in state or context for authenticated user session
         console.log('Logged in user:', user);

@@ -1,13 +1,13 @@
 const db = require('../../db');
 
 const createNewSubscription = (req, res) => {
-  const { planName, createdBy, modifiedBy } = req.body;
+  const { subscription_id, planName, createdBy, modifiedBy } = req.body;
 
   const insertQuery = `
-    INSERT INTO NeewSubscription1 (PlanName, CreatedBy, ModifiedBy)
-    VALUES (?, ?, ?)`;
+    INSERT INTO NeewSubscription1 (SubscriptionID,PlanName, CreatedBy, ModifiedBy)
+    VALUES (?, ?, ?, ?)`;
 
-  const insertValues = [planName, createdBy, modifiedBy];
+  const insertValues = [subscription_id,planName, createdBy, modifiedBy];
 
   db.query(insertQuery, insertValues, (insertErr) => {
     if (insertErr) {
