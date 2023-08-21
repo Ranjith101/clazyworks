@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Container, Form, Button } from 'react-bootstrap';
 import { registerUser } from '../api/api';
 import { Link, useNavigate } from 'react-router-dom';
+import '../styles/styles.css'
 
 const RegisterPage = () => {
   const navigate = useNavigate();
@@ -106,11 +107,15 @@ const RegisterPage = () => {
             onChange={(e) => setPassword(e.target.value)}
           />
         </Form.Group>
+        <div className="button-container">
         <Button variant="primary" type="submit" disabled={!isFormValid}>
           Register
         </Button>
+        </div>
       </Form>
+      <div className="link-container">
       <Link to="/">Login</Link>
+      </div>
     </Container>
   );
 };

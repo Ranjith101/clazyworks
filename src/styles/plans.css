@@ -1,0 +1,99 @@
+/* SubscriptionPage.css */
+.subscription_plans {
+    text-align: center;
+    margin: 20px;
+  }
+  
+  .subscription_plan_container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  
+  .subscription_plan {
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 20px;
+    margin: 10px;
+    text-align: center;
+    width: 250px;
+  }
+  
+  .subscription_plan h3 {
+    font-size: 1.5rem;
+  }
+  
+  .subscription_plan p {
+    font-size: 1.2rem;
+    margin-top: 10px;
+  }
+  
+  .subscription_plan button {
+    background-color: #3399cc;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    font-size: 1.2rem;
+    cursor: pointer;
+  }
+  
+  .subscription_plan button:hover {
+    background-color: #2678a3;
+  }
+  
+  .product-block {
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 20px;
+    margin: 10px;
+    /* min-height: 42.75px; */
+    width: 250px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    background-color: #f9f9f9;
+
+  }
+  
+  .plan-name {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #333;
+  }
+  
+  .price {
+    font-size: 2rem;
+    font-weight: bold;
+    color: #e91e63; /* Customize the price color */
+  }
+  
+  .detail {
+    font-size: 1.2rem;
+    color: #888;
+  }
+  
+  .ztogglegroup {
+    font-weight: bold;
+  }
+  
+  .getstart-plan, .access-btn {
+    display: inline-block;
+    padding: 10px 20px;
+    margin-top: 10px;
+    background-color: #007bff; /* Customize button background color */
+    color: #fff;
+    text-decoration: none;
+    border-radius: 5px;
+  }
+  
+  .getstart-plan:hover, .access-btn:hover {
+    background-color: #0056b3; /* Customize button hover color */
+  }
+  
+  .plan-desc {
+    font-size: 1.2rem;
+    color: #444;
+    margin-top: 10px;
+  }
+  

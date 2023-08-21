@@ -40,7 +40,7 @@ router.post("/verify", async (req, res) => {
 
         if (razorpay_signature === expectedSign) {
             // Store payment details in the database
-            const insertPaymentQuery = 'INSERT INTO Payments (user_id, username, payment_id, payment_amount) VALUES (?, ?, ?, ?)';
+            const insertPaymentQuery = 'INSERT INTO Payments (vendor_id, username, payment_id, payment_amount) VALUES (?, ?, ?, ?)';
             const insertPaymentValues = [userId, username, razorpay_payment_id, response.amount ]; // Convert amount to actual currency
             console.log(insertPaymentValues,"payment");
             db.query(insertPaymentQuery, insertPaymentValues, (err, result) => {

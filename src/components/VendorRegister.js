@@ -2,13 +2,14 @@ import React, { useState, useEffect } from 'react';
 import { registerVendor } from '../api/api'; // Import your API function
 import { Form, Container, Button } from 'react-bootstrap';
 import { Link, useNavigate } from 'react-router-dom';
-import { useSelector,useDispatch } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { setVendor } from '../store/userSlice';
 import { fetchUserProfileApi } from '../api/api';
+import SubscriptionPage from './razorpay/Payment';
 
 const VendorRegistrationPage = () => {
     const dispatch = useDispatch();
-    const user = useSelector((state)=>state.user)
+    // const user = useSelector((state)=>state.user)
     // console.log("from redux",user)
     const navigate = useNavigate();
     const userFromLocalStorage = JSON.parse(localStorage.getItem('user'));
@@ -39,6 +40,7 @@ const VendorRegistrationPage = () => {
         const userProfile = await fetchUserProfileApi(userId);
         console.log(userProfile)
         setIsVendorRegistered(userProfile); // Assuming the API response has an 'isVendor' field
+        
       } catch (error) {
         console.error('Error fetching user profile:', error);
       }
@@ -77,16 +79,17 @@ const VendorRegistrationPage = () => {
   };
 
   return (
+  <>   
     
-    <Container>
       {isVendorRegistered ? (
         <>
-        <p>User is registered as a vendor.</p>
-        <p>if payment pending <Link to='/payment'>payment page</Link></p>
+        {/* <p>User is registered as a vendor.</p>
+        <p>if payment pending <Link to='/payment'>payment page</Link></p> */}
+        <SubscriptionPage />
         </>
       ) : (
         <>
-      
+    <Container>  
     <h1>Vendor Registration</h1>
     <Form>
       <Form.Control type="text" name="firstname" placeholder="First Name" className='mb-3' onChange={handleInputChange} />
@@ -110,9 +113,10 @@ const VendorRegistrationPage = () => {
         Register Vendor
       </Button>
     </Form>
+    </Container>
     </>
     )}
-  </Container>
+  </> 
   );
 };
 

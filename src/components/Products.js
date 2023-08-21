@@ -9,7 +9,7 @@ const ProductsPage = () => {
   ];
 
   return (
-    <Container>
+    <>    
       <h2 className="mt-4 mb-3">Products</h2>
       <Table striped bordered responsive>
         <thead>
@@ -29,8 +29,9 @@ const ProductsPage = () => {
           ))}
         </tbody>
       </Table>
-    </Container>
-  );
+
+    </>
+ );
 };
 
 export default ProductsPage;
