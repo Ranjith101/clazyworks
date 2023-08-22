@@ -38,7 +38,7 @@ const LoginPage = () => {
         navigate('/vendor-register')
 
         // You can store the user information in state or context for authenticated user session
-        console.log('Logged in user:', user);
+        // console.log('Logged in user:', user);
       } else {
         console.error('Login response has no data:', response);
         setError('An error occurred while logging in');

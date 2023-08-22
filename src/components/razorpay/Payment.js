@@ -1,14 +1,12 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { useSelector } from "react-redux";
 import { fetchUserPaymentApi } from "../../api/api";
-import ProductsPage from "../Products";
 import '../../styles/plans.css'
 import { Button } from "react-bootstrap";
+import Dashboard from "../Dashboard";
 
 const SubscriptionPage = () => {
-  const vendor_details = useSelector((state) => state.user)
-  console.log(vendor_details, "from_redux")
+
   const plans = [
     { id: "Silver Plan", name: "Silver Plan", price: 299 },
     { id: "Gold Plan", name: "Gold Plan", price: 499 },
@@ -51,7 +49,7 @@ const SubscriptionPage = () => {
           },
           handler: async (response) => {
             response.amount = plan.price;
-            console.log(response);
+            // console.log(response);
             // After successful payment, verify and store payment details
             try {
               const verifyUrl = "http://localhost:3001/api/payment/verify";
@@ -82,7 +80,7 @@ const SubscriptionPage = () => {
                     status: "Active",      // Modify as needed
                   }
                   const v_subscriptionResponse = await axios.post(v_subscriptionApiUrl, v_subscriptionData);
-                  console.log(v_subscriptionResponse);
+                  // console.log(v_subscriptionResponse);
                 } catch (error) {
                   console.log(error);
                 }
@@ -115,7 +113,7 @@ const SubscriptionPage = () => {
     const fetchPaymentInfo = async () => {
       try {
         const paymentData = await fetchUserPaymentApi(userId);
-        console.log(paymentData)
+        // console.log(paymentData)
         setPaymentInfo(paymentData);
       } catch (error) {
         console.error('Error fetching payment information:', error);
@@ -127,42 +125,32 @@ const SubscriptionPage = () => {
   return (
     <div className="App">
       {paymentInfo ? (
-        <p>
-          <ProductsPage />
+        <p style={{marginLeft:"-26%"}}>
+          <Dashboard />
         </p>
       ) : (
         <>
-          {/* <div className="subscription_plans">
-          <h2>Choose a Subscription Plan</h2>
-          <div className="subscription_plan_container">
-            {plans.map((plan) => (
-              <div key={plan.id} className="subscription_plan">
-                <h3>{plan.name}</h3>
-                <p>&#x20B9; {plan.price}</p>
-                <button onClick={() => handlePayment(plan.id)}>Select Plan</button>
+
+          {plans.map((plan) => {
+            return (
+              <div >
+              <div class="product-block" id="zplan1">
+                <span class="plan-name">{plan.name}</span>
+                <span class="price zpricegroup zpricegroup1 zdisplay zpricegroup4" id="zplan-Standard" data-price="20;18;18;1300;20;16;2400;26;30;73;73;324;270;5400;1440;324;25;276000//14;12;9;800;14;12;1680;17;20;51;51;216;180;3600;960;216;19;193200" data-nosnippet="true">
+                  <span class="zcurrency-symbol" style={{ textTransform: "uppercase" }}>₹</span>
+                  <span class="z-price-text">{plan.price}</span>
+                </span>
+                <span class="detail">
+                  <span class="">
+                    <span class="ztogglegroup ztogglegroup1" data-toggleval="/user/month billed monthly;/user/month billed annually">/user/month billed annually</span>
+                  </span>
+                </span>
+                <Button class="access-btn" onClick={() => handlePayment(plan.id)}>Buy Now</Button>
+                <p class="plan-desc">Automate and optimize your sales cycle</p>
               </div>
-            ))}
-          </div>
-        </div> */}
-        {plans.map((plan)=>{
-          return(
- 
-          <div class="product-block" id="zplan1">
-          <span class="plan-name">{plan.name}</span>
-          <span class="price zpricegroup zpricegroup1 zdisplay zpricegroup4" id="zplan-Standard" data-price="20;18;18;1300;20;16;2400;26;30;73;73;324;270;5400;1440;324;25;276000//14;12;9;800;14;12;1680;17;20;51;51;216;180;3600;960;216;19;193200" data-nosnippet="true">
-            <span class="zcurrency-symbol" style={{textTransform:"uppercase"}}>₹</span>
-            <span class="z-price-text">{plan.price}</span>
-          </span>
-          <span class="detail">
-            <span class="">
-              <span class="ztogglegroup ztogglegroup1" data-toggleval="/user/month billed monthly;/user/month billed annually">/user/month billed annually</span>
-            </span>
-          </span>
-          <Button class="access-btn" onClick={() => handlePayment(plan.id)}>Buy Now</Button>
-          <p class="plan-desc">Automate and optimize your sales cycle</p>
-        </div>
-        )
-        })}
+              </div>
+            )
+          })}
         </>
       )}
     </div>

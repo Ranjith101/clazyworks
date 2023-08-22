@@ -5,7 +5,7 @@ router.get('/:userId', async (req, res) => {
     try {
       const userId = req.params.userId;
   
-      const query = 'SELECT * FROM Payments WHERE user_id = ?';
+      const query = 'SELECT * FROM Payments WHERE vendor_id = ?';
       db.query(query, [userId], (error, paymentInfoRows) => {
         if (error) {
           console.error('Error fetching payment information:', error);

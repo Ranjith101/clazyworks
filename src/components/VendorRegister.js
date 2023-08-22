@@ -38,7 +38,7 @@ const VendorRegistrationPage = () => {
     const fetchUserProfile = async () => {
       try {
         const userProfile = await fetchUserProfileApi(userId);
-        console.log(userProfile)
+        // console.log(userProfile)
         setIsVendorRegistered(userProfile); // Assuming the API response has an 'isVendor' field
         
       } catch (error) {

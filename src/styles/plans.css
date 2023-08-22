@@ -58,7 +58,8 @@
     width: 100%; /* Make the product blocks take full width */
   }
   .App{
-    margin-left: 0;
+    margin-left: 20px;
+    width: 90%;
   }
 }
 @media (max-width: 568px) {

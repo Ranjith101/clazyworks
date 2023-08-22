@@ -3,8 +3,8 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import LoginPage from './components/Login';
 import Register from './components/Register';
 import VendorRegistrationPage from './components/VendorRegister';
-import Products from './components/Products';
 import SubscriptionPage from './components/razorpay/Payment';
+import Dashboard from './components/Dashboard';
 
 function App() {
   return (
@@ -14,7 +14,7 @@ function App() {
         <Route path="/register" element={<Register />} />
         <Route path="/payment" element={<SubscriptionPage />} />
         <Route path="/vendor-register" element={<VendorRegistrationPage />} />
-        <Route path="/products" element={<Products />} />
+        <Route path="/dashboard" element={<Dashboard />} />
       </Routes>
     </Router>
   );
