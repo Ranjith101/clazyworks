@@ -4,7 +4,7 @@ const loginUser = (req, res) => {
   const { emailOrMobile, password } = req.body;
 
   const selectQuery = `
-    SELECT Users.id, Users.firstname, Users.lastname
+    SELECT Users.id, Users.firstname, Users.lastname, Users.verified
     FROM Users 
     WHERE (Users.email = ? OR Users.mobile = ?) AND Users.password = ?`;
     
@@ -17,22 +17,29 @@ const loginUser = (req, res) => {
     } else {
       if (result.length === 1) {
         const user = result[0];
-        
-        // Insert user information into the Login table and set isLogged to 1
-        const insertQuery = `
-          INSERT INTO Login (UserID, UserName, Password, IsGoogleAuth, Status, isLogged, CreatedBy)
-          VALUES (?, ?, ?, ?, ?, ?, ?)`;
-        
-        const insertValues = [user.id, user.firstname, password, 'No', 'Active', 1, user.id];
 
-        db.query(insertQuery, insertValues, (insertErr) => {
-          if (insertErr) {
-            console.error('Error inserting user data into Login table:', insertErr);
-          }
+        if (user.verified === 1) {
+          // User's email is verified, allow login
+          // Insert user information into the Login table and set isLogged to 1
+          const insertQuery = `
+            INSERT INTO Login (UserID, UserName, Password, IsGoogleAuth, Status, isLogged, CreatedBy)
+            VALUES (?, ?, ?, ?, ?, ?, ?)`;
+          
+          const insertValues = [user.id, user.firstname, password, 'No', 'Active', 1, user.id];
 
-          console.log('Login Successful:', user); // Log the user object for debugging
-          res.status(200).json({ message: 'Login successful', user });
-        });
+          db.query(insertQuery, insertValues, (insertErr) => {
+            if (insertErr) {
+              console.error('Error inserting user data into Login table:', insertErr);
+            }
+
+            console.log('Login Successful:', user); // Log the user object for debugging
+            res.status(200).json({ message: 'Login successful', user });
+          });
+        } else {
+          // User's email is not verified, prevent login
+          console.log('Email not verified for user:', user); // Log for debugging
+          res.status(401).json({ error: 'Email not verified' });
+        }
       } else {
         console.log('Invalid Credentials'); // Log for debugging
         res.status(401).json({ error: 'Invalid credentials' });

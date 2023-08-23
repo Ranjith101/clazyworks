@@ -21,6 +21,8 @@ const newSubscriptionRoute = require('./routes/newSubscription');
 const vendorRoutes = require('./routes/vendorRoutes');
 const razorpayRoutes = require('./routes/razorpayRoutes');
 const paymentRoutes = require('./routes/controllers/fetchPaymentController');
+const {verifyEmail} = require('./routes/controllers/verifyEmail');
+
 
 app.use(bodyParser.json());
 app.use(cors());
@@ -50,6 +52,7 @@ app.use('/api', newSubscriptionRoute);
 app.use('/api', vendorRoutes);
 app.use('/api/payment',razorpayRoutes)
 app.use('/api/fetchpayment',paymentRoutes)
+app.use('/api',verifyEmail)
 
 dotenv.config()
 
