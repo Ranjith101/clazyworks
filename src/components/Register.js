@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
-import { Container, Form, Button } from 'react-bootstrap';
-import { registerUser } from '../api/api';
+import React, { useState, useEffect } from 'react';
+import { Container, Form, Button, Alert } from 'react-bootstrap';
+import { registerUser, sendVerificationEmail } from '../api/api'; // Update the import to include the sendVerificationEmail function
 import { Link, useNavigate } from 'react-router-dom';
-import '../styles/styles.css'
+import '../styles/styles.css';
+import axios from 'axios';
 
 const RegisterPage = () => {
   const navigate = useNavigate();
@@ -12,57 +13,92 @@ const RegisterPage = () => {
   const [mobile, setMobile] = useState('');
   const [password, setPassword] = useState('');
   const [isFormValid, setIsFormValid] = useState(false);
+  const [emailSent, setEmailSent] = useState(false);
+  const [verificationToken, setVerificationToken] = useState(null);
+  const [verificationError, setVerificationError] = useState(null);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     try {
-      await registerUser({
+      const response = await registerUser({
         firstname,
         lastname,
         email,
         mobile,
         password,
       });
-      alert('User registered successfully');
-      navigate('/');
-      // You can redirect the user to another page here if needed
+
+      // Get the verification token from the response if available
+      if (response && response.data && response.data.verificationToken) {
+        setVerificationToken(response.data.verificationToken);
+      }
+
+      // Notify the user that the registration was successful
+      setEmailSent(true);
     } catch (error) {
       console.error('Error registering user:', error);
       alert('An error occurred while registering user');
     }
   };
 
-  // Update the form validity state
-  const updateFormValidity = () => {
-    setIsFormValid(firstname && lastname && email && mobile && password);
+  const sendVerification = async () => {
+    try {
+      await sendVerificationEmail(email);
+
+      // Notify the user that the verification email has been sent
+      setEmailSent(true);
+    } catch (error) {
+      console.error('Error sending verification email:', error);
+      alert('An error occurred while sending the verification email');
+    }
   };
 
-  // Call the form validation function whenever input values change
-  React.useEffect(() => {
-    updateFormValidity();
+  useEffect(() => {
+    // Update the form validity state whenever input values change
+    setIsFormValid(firstname && lastname && email && mobile && password);
   }, [firstname, lastname, email, mobile, password]);
- 
-  // const handleSubmit = async (e) => {
-  //   e.preventDefault();
+
+  // Handle email verification when the verification token is available
+  useEffect(() => {
+    if (verificationToken) {
+      // Send the verification token to your server for email verification
+      verifyEmail(verificationToken);
+    }
+  }, [verificationToken]);
+
+  const verifyEmail = async (token) => {
+    try {
+      // Make an API call to verify the email using the token
+      const response = await axios.get(`http://locahost:3001/api/verify-email?verificationToken=${token}`);
+      
+      // Check if verification was successful based on the response status
+      if (response.status === 200) {
+        // Email is successfully verified
+        console.log('Email successfully verified');
+        
+        // You can set a state variable to display a success message to the user if needed
+        // Example: setEmailVerificationSuccess(true);
+        
+        // Redirect the user to the login page or another appropriate page
+        navigate('/');
+      } else {
+        // Verification failed, display an error message or handle as needed
+        console.error('Email verification failed');
+        
+        // You can set a state variable to display an error message to the user if needed
+        // Example: setVerificationError('Email verification failed');
+      }
+    } catch (error) {
+      // Handle API request error
+      console.error('Error verifying email:', error);
+      
+      // You can set a state variable to display an error message to the user if needed
+      // Example: setVerificationError('An error occurred while verifying your email. Please try again later.');
+    }
+  };
   
-  //   try {
-  //     await registerUser({
-  //       firstname,
-  //       lastname,
-  //       email,
-  //       mobile,
-  //       password,
-  //     });
-  //     alert('User registered successfully');
-  //     navigate('/')
-  //     // You can redirect the user to another page here if needed
-  //   } catch (error) {
-  //     console.error('Error registering user:', error);
-  //     alert('An error occurred while registering user');
-  //   }
-  // };
- 
+
   return (
     <Container>
       <h2>Register</h2>
@@ -108,13 +144,37 @@ const RegisterPage = () => {
           />
         </Form.Group>
         <div className="button-container">
-        <Button variant="primary" type="submit" disabled={!isFormValid}>
-          Register
-        </Button>
+          <Button variant="primary" type="submit" disabled={!isFormValid}>
+            Register
+          </Button>
         </div>
       </Form>
+      {emailSent && !verificationToken && (
+        <div>
+          <Alert variant="info">
+            Registration successful! An email has been sent to your address for verification.
+          </Alert>
+          <div className="button-container">
+            <Button variant="primary" onClick={sendVerification}>
+              Resend Verification Email
+            </Button>
+          </div>
+        </div>
+      )}
+      {verificationToken && (
+        <div>
+          <Alert variant="success">
+            Email verification successful! You can now <Link to="/">login</Link>.
+          </Alert>
+        </div>
+      )}
+      {verificationError && (
+        <div>
+          <Alert variant="danger">{verificationError}</Alert>
+        </div>
+      )}
       <div className="link-container">
-      <Link to="/">Login</Link>
+        <Link to="/">Login</Link>
       </div>
     </Container>
   );

@@ -45,7 +45,7 @@ const LoginPage = () => {
       }
     } catch (error) {
       console.error('Error logging in:', error);
-      setError('Invalid credentials');
+      setError(error.response.data.error);
     }
   };
 
