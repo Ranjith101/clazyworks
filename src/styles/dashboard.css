@@ -1,0 +1,41 @@
+/* Dashboard.css */
+
+/* Default styles for the sidebar */
+#sidebar {
+    min-width: 250px;
+    max-width: 250px;
+    transition: all 0.3s;
+    background: #f8f9fa;
+  }
+  
+  /* Default styles for the toggle button */
+  .btn-toggle-sidebar {
+    display: none; /* Initially hide the toggle button */
+  }
+  
+  /* Media query for smaller screens */
+  @media (max-width: 768px) {
+    /* Collapse the sidebar by default on smaller screens */
+    #sidebar {
+      margin-left: -250px;
+    }
+  
+    /* Show the toggle button on smaller screens */
+    .btn-toggle-sidebar {
+      display: block;
+      position: absolute;
+      top: 10px;
+      left: 10px;
+    }
+  
+    /* Styles for the collapsed sidebar */
+    #sidebar.toggled {
+      margin-left: 0;
+    }
+  
+    /* Adjust the content margin on smaller screens */
+    #content.toggled {
+      margin-left: 0;
+    }
+  }
+  

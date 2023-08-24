@@ -3,7 +3,8 @@ import axios from "axios";
 import { fetchUserPaymentApi } from "../../api/api";
 import '../../styles/plans.css'
 import { Button } from "react-bootstrap";
-import Dashboard from "../Dashboard";
+import Dashboard from "../dashboard/Dashboard";
+
 
 const SubscriptionPage = () => {
 
