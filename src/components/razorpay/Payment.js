@@ -100,35 +100,35 @@ const SubscriptionPage = () => {
     }
   };
 
-  const userId = user.id;
-  useEffect(() => {
-    const fetchPaymentInfo = async () => {
-      try {
-        const paymentData = await fetchUserPaymentApi(userId);
-        setPaymentInfo(paymentData);
-      } catch (error) {
-        console.error('Error fetching payment information:', error);
-      }
-    };
+  // const userId = user.id;
+  // useEffect(() => {
+  //   const fetchPaymentInfo = async () => {
+  //     try {
+  //       const paymentData = await fetchUserPaymentApi(userId);
+  //       setPaymentInfo(paymentData);
+  //     } catch (error) {
+  //       console.error('Error fetching payment information:', error);
+  //     }
+  //   };
 
-    fetchPaymentInfo();
-  }, [userId]);
+  //   fetchPaymentInfo();
+  // }, [userId]);
 
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
 
-  useEffect(() => {
-    if (paymentInfo) {
-      navigate('/dashboard');
-    }
-  }, [paymentInfo, navigate]);
+  // useEffect(() => {
+  //   if (paymentInfo) {
+  //     navigate('/dashboard');
+  //   }
+  // }, [paymentInfo, navigate]);
 
   return (
     <div className="App">
-      {paymentInfo ? (
+      {/* {paymentInfo ? (
         <p style={{ marginLeft: "-26%" }}>
           <Dashboard />
         </p>
-      ) : (
+      ) : ( */}
         <>
           {plans.map((plan) => {
             return (
@@ -151,7 +151,7 @@ const SubscriptionPage = () => {
             )
           })}
         </>
-      )}
+      {/* )} */}
     </div>
   );
 };

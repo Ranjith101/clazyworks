@@ -20,6 +20,7 @@ import {
   import BarChart from "../../components/BarChart";
   import StatBox from "../../components/StatBox";
   import ProgressCircle from "../../components/ProgressCircle";
+import SubscriptionPage from "../../../razorpay/Payment";
   
   const Dashboard1 = () => {
     const theme = useTheme();
@@ -228,16 +229,17 @@ import {
               </Box>
             </Grid>
             <Grid xs={12}>
-              <Box backgroundColor={colors.primary[400]} padding="30px">
+              <Box  padding="30px">
                 <Typography
                   variant="h5"
                   fontWeight="600"
                   sx={{ marginBottom: "15px" }}
                 >
-                  Geography Based Traffic
+                  Subscription
                 </Typography>
                 <Box height="200px">
-                  <GeographyChart isDashboard={true} />
+                  {/* <GeographyChart isDashboard={true} /> */}
+                  <SubscriptionPage/>
                 </Box>
               </Box>
             </Grid>
