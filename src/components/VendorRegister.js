@@ -62,7 +62,7 @@ const VendorRegistrationPage = () => {
       // console.log('Vendor registered successfully', response.vendor);
       dispatch(setVendor(response.vendor))
       localStorage.setItem('registeredVendor', JSON.stringify(response.vendor));
-      navigate('/payment')
+      navigate('/dashboard')
       
     } catch (error) {
       // Handle the error
@@ -83,8 +83,6 @@ const VendorRegistrationPage = () => {
     
       {isVendorRegistered ? (
         <>
-        {/* <p>User is registered as a vendor.</p>
-        <p>if payment pending <Link to='/payment'>payment page</Link></p> */}
         <SubscriptionPage />
         </>
       ) : (

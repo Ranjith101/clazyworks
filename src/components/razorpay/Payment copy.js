@@ -124,11 +124,11 @@ const SubscriptionPage = () => {
 
   return (
     <div className="App">
-      {paymentInfo ? (
+      {/* {paymentInfo ? (
         <p style={{ marginLeft: "-26%" }}>
           <Dashboard />
         </p>
-      ) : (
+      ) : ( */}
         <>
           {plans.map((plan) => {
             return (
@@ -151,7 +151,7 @@ const SubscriptionPage = () => {
             )
           })}
         </>
-      )}
+      {/* )} */}
     </div>
   );
 };

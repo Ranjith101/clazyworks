@@ -6,8 +6,8 @@ const { v4: uuidv4 } = require('uuid');
 const transporter = nodemailer.createTransport({
   service: 'Gmail',
   auth: {
-    user: '',
-    pass: '',
+    user: 'snowj0940@gmail.com',
+    pass: 'ytipaworlavvyaxe',
   },
 });
 

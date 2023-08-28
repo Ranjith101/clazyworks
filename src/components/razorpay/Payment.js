@@ -100,28 +100,39 @@ const SubscriptionPage = () => {
     }
   };
 
-  // const userId = user.id;
-  // useEffect(() => {
-  //   const fetchPaymentInfo = async () => {
-  //     try {
-  //       const paymentData = await fetchUserPaymentApi(userId);
-  //       setPaymentInfo(paymentData);
-  //     } catch (error) {
-  //       console.error('Error fetching payment information:', error);
-  //     }
-  //   };
+  const userId = user.id;
+  useEffect(() => {
+    const fetchPaymentInfo = async () => {
+      try {
+        const paymentData = await fetchUserPaymentApi(userId);
+        setPaymentInfo(paymentData);
+      } catch (error) {
+        console.error('Error fetching payment information:', error);
+      }
+    };
 
-  //   fetchPaymentInfo();
-  // }, [userId]);
+    fetchPaymentInfo();
+  }, [userId]);
 
-  // const navigate = useNavigate();
+  const navigate = useNavigate();
 
   // useEffect(() => {
   //   if (paymentInfo) {
   //     navigate('/dashboard');
   //   }
   // }, [paymentInfo, navigate]);
+  useEffect(() => {
+    if (paymentInfo) {
+      // If payment is successful, navigate to the dashboard after 8 seconds
+      const redirectToDashboard = setTimeout(() => {
+        navigate('/dashboard');
+      }, 8000);
 
+      // Clear the timeout if the component unmounts or if payment fails
+      return () => clearTimeout(redirectToDashboard);
+    }
+  }, [paymentInfo, navigate]);
+  
   return (
     <div className="App">
       {/* {paymentInfo ? (

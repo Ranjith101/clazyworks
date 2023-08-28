@@ -35,7 +35,7 @@ const LoginPage = () => {
         dispatch(setUser(user));
         // Store user information in localStorage
         localStorage.setItem('user', JSON.stringify(user));
-        navigate('/vendor-register')
+        navigate('/dashboard')
 
         // You can store the user information in state or context for authenticated user session
         // console.log('Logged in user:', user);
