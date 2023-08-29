@@ -1,14 +1,14 @@
 const db = require('../../db');
 
 const loginUser = (req, res) => {
-  const { emailOrMobile, password } = req.body;
+  const { emailOrMobile, lpassword } = req.body;
 
   const selectQuery = `
     SELECT Users.id, Users.firstname, Users.lastname, Users.verified
     FROM Users 
     WHERE (Users.email = ? OR Users.mobile = ?) AND Users.password = ?`;
     
-  const selectValues = [emailOrMobile, emailOrMobile, password];
+  const selectValues = [emailOrMobile, emailOrMobile, lpassword];
 
   db.query(selectQuery, selectValues, (err, result) => {
     if (err) {
@@ -25,7 +25,7 @@ const loginUser = (req, res) => {
             INSERT INTO Login (UserID, UserName, Password, IsGoogleAuth, Status, isLogged, CreatedBy)
             VALUES (?, ?, ?, ?, ?, ?, ?)`;
           
-          const insertValues = [user.id, user.firstname, password, 'No', 'Active', 1, user.id];
+          const insertValues = [user.id, user.firstname, lpassword, 'No', 'Active', 1, user.id];
 
           db.query(insertQuery, insertValues, (insertErr) => {
             if (insertErr) {

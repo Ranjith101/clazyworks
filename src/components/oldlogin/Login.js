@@ -1,9 +1,9 @@
 import React, {  useState } from 'react';
 import { Container, Form, Button } from 'react-bootstrap';
-import {  loginUser } from '../api/api';
+import {  loginUser } from '../../api/api';
 import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import { setUser } from '../store/userSlice';
+import { setUser } from '../../store/userSlice';
 import '../styles/styles.css'
 
 

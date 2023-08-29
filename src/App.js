@@ -1,7 +1,7 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import LoginPage from './components/Login';
-import Register from './components/Register';
+// import LoginPage from './components/Login';
+// import Register from './components/Register';
 import VendorRegistrationPage from './components/VendorRegister';
 import SubscriptionPage from './components/razorpay/Payment';
 import EmailVerificationPage from './components/EmailVerification';
@@ -21,6 +21,7 @@ import Line from "./components/dashboard/pages/line";
 import Pie from "./components/dashboard/pages/pie";
 import FAQ from "./components/dashboard/pages/faq";
 import Geography from "./components/dashboard/pages/geography";
+import LoginForm from './components/form/Loginform';
 
 function App() {
   const [theme, colorMode] = useMode();
@@ -28,8 +29,8 @@ function App() {
   return (
 
       <Routes>
-        <Route path="/" element={<LoginPage />} />
-        <Route path="/register" element={<Register />} />
+        <Route path="/" element={<LoginForm />} />
+        {/* <Route path="/register" element={<LoginPage />} /> */}
         <Route path="/verify-email" element={<EmailVerificationPage />} />
         <Route path="/payment" element={<SubscriptionPage />} />
         <Route path="/vendor-register" element={<VendorRegistrationPage />} />
@@ -42,9 +43,11 @@ function App() {
               <ThemeProvider theme={theme}>
                 <CssBaseline />
                 <MyProSidebarProvider>
+                  
                   <div style={{ height: "100%", width: "100%" }}>
                     <main>
                       <Topbar />
+                      <Routes>
                       <Route path="/" element={<Dashboard />} />
                       <Route path="team" element={<Team />} />
                       <Route path="contacts" element={<Contacts />} />
@@ -56,8 +59,10 @@ function App() {
                       <Route path="pie" element={<Pie />} />
                       <Route path="faq" element={<FAQ />} />
                       <Route path="geography" element={<Geography />} />
+                      </Routes>
                     </main>
                   </div>
+
                 </MyProSidebarProvider>
               </ThemeProvider>
             </ColorModeContext.Provider>

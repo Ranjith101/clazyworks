@@ -62,7 +62,8 @@ const VendorRegistrationPage = () => {
       // console.log('Vendor registered successfully', response.vendor);
       dispatch(setVendor(response.vendor))
       localStorage.setItem('registeredVendor', JSON.stringify(response.vendor));
-      navigate('/dashboard')
+      window.location.reload()
+      // navigate('/dashboard')
       
     } catch (error) {
       // Handle the error
