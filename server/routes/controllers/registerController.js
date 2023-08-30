@@ -1,13 +1,14 @@
 const db = require('../../db');
 const nodemailer = require('nodemailer');
 const { v4: uuidv4 } = require('uuid');
+require('dotenv').config(); // Load environment variables from .env file
 
 // Create a transporter with your SMTP settings
 const transporter = nodemailer.createTransport({
   service: 'Gmail',
   auth: {
-    user: 'snowj0940@gmail.com',
-    pass: 'ytipaworlavvyaxe',
+    user: process.env.SMTP_USER,
+    pass: process.env.SMTP_PASS,
   },
 });
 
